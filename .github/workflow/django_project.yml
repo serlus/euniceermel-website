@@ -1,7 +1,7 @@
 name: CI website Eunice
 
-on: [push]
-
+on: 
+  push:
   workflow_dispatch:
 
 jobs:
