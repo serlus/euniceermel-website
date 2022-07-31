@@ -1,6 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
+from django.contrib import auth
 from django.db import models
 from django.utils import timezone
 from django.core.mail import send_mail
@@ -73,10 +74,9 @@ class UserManager(BaseUserManager):
         return self.none()
 
 
-
 class User(AbstractBaseUser, PermissionsMixin):
     """
-    App base User    
+    App base User
 
     email and password are required. Other fields are optional.
     """
@@ -126,4 +126,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
-
