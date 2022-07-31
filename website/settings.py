@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from functools import partial
 import os
 from pathlib import Path
-from decouple import config
+from decouple import config, Csv
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,8 +29,9 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
+AUTH_USER_MODEL = 'base.User'
 
 # Application definition
 
@@ -78,12 +79,12 @@ WSGI_APPLICATION = 'website.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-default_db_url = 'sqlite://' + os.path.join(BASE_DIR, 'db.sqlite3')
+default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
 parse_database = partial(dj_database_url.parse, conn_max_age=600)
 
 DATABASES = {
-    # 'default': config('DATABASE_URL', default=default_db_url, cast=parse_database),
+    'default': config('DATABASE_URL', default=default_db_url, cast=parse_database),
 }
 
 
